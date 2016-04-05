@@ -1,0 +1,17 @@
+<div class="input text">
+    <label for="generic_path">Folder on server</label>
+    <input type="text" name="generic_path" id="generic_path" ng-model="$parent.Path" placeholder="Enter the destination path" />
+</div>
+
+<div class="input text">
+    <label for="generic_username">NBI Username</label>
+    <input type="text" name="generic_username" id="generic_username" ng-model="$parent.Username" placeholder="Authentication username"  />
+</div>
+
+<div class="input password">
+    <label for="generic_password">NBI Password</label>
+    <input type="text" name="generic_password" id="generic_password" ng-model="$parent.Password" placeholder="Authentication password"  />
+</div>
+<div>
+    <label>Private Key</label> {{$parent.PrivateKey}}
+</div>
