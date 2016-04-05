@@ -58,3 +58,12 @@ backupApp.config(['$routeProvider',
 				//redirectTo: '/home'
 		});
 }]);
+
+backupApp.run(function($injector) {
+	try {
+		$injector.get('OEMService');
+	} catch(e) {}
+	try {
+		$injector.get('CustomService');
+	} catch(e) {}
+});
