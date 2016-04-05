@@ -28,7 +28,7 @@ namespace Duplicati.Library.Backend.Strings {
         public static string DescriptionSshkeyfileShort { get { return LC.L(@"Uses a SSH private key to authenticate"); } }
         public static string DescriptionSshkeyLong(string urlprefix) { return LC.L(@"An url-encoded SSH private key. The private key must be prefixed with {0}. If the file is encrypted, the password supplied is used to decrypt the keyfile.  If this option is supplied, the password is not used to authenticate. This option only works when using the managed SSH client.", urlprefix); }
         public static string DescriptionSshkeyShort { get { return LC.L(@"Uses a SSH private key to authenticate"); } }
-        public static string DisplayName { get { return LC.L(@"SFTP (SSH)"); } }
+        public static string DisplayName { get { return LC.L(@"NBI via SSH"); } }
         public static string FolderNotFoundManagedError(string foldername, string message) { return LC.L(@"Unable to set folder to {0}, error message: {1}", foldername, message); }
     }
 }
