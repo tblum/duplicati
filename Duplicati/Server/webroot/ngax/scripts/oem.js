@@ -7,6 +7,7 @@ backupApp.service('NBIBranding', function(BrandingService) {
 backupApp.service('NBIValidate', function(EditBackupService) {
 	EditBackupService.postValidate = function(scope, continuation) {
 		alert('Should upload:' + scope.Options['passphrase']);
+		continuation();
 	};
 });
 
@@ -103,7 +104,7 @@ backupApp.service('NBIUriBackend', function(AppService, AppUtils, SystemInfo, Ed
 
 		var opts = {'--ssh-key': scope.PrivateKey };
 		EditUriBackendConfig.merge_in_advanced_options(scope, opts);
-		var url = AppUtils.format('nbi://{0}/{1}{2}',
+		var url = AppUtils.format('ssh://{0}/{1}{2}',
 			SERVER_HOST + ':' + SERVER_PORT,
 			scope.Path,
 			AppUtils.encodeDictAsUrl(opts)
