@@ -5,8 +5,8 @@ backupApp.service('NBIBranding', function(BrandingService) {
 });
 
 backupApp.service('NBIValidate', function(EditBackupService) {
-	EditBackupService.postValidate = function(continuation) {
-		alert('Should upload');
+	EditBackupService.postValidate = function(scope, continuation) {
+		alert('Should upload:' + scope.Options['passphrase']);
 	};
 });
 
