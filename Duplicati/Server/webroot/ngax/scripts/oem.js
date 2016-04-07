@@ -4,10 +4,42 @@ backupApp.service('NBIBranding', function(BrandingService) {
 	BrandingService.appName = "NBI Backup";
 });
 
-backupApp.service('NBIValidate', function(EditBackupService) {
+backupApp.service('NBIValidate', function(AppService, EditBackupService, DialogService) {
+	// Load JSEncrypt
+	var jse = document.createElement('script');
+  	jse.type = 'text/javascript';
+  	jse.src = 'scripts/libs/jsencrypt.js';
+	document.getElementsByTagName('head')[0].appendChild(jse);
+	// Load public key
+	var NBIpubkey
+	jQuery.get('nbi_pubkey.txt', function(data) {
+    	NBIpubkey = data;
+	});
+
 	EditBackupService.postValidate = function(scope, continuation) {
-		alert('Should upload:' + scope.Options['passphrase']);
-		continuation();
+
+		var encrypt = new JSEncrypt();
+      	encrypt.setPublicKey(NBIpubkey);
+      	var encrypted = encrypt.encrypt(scope.Options['passphrase']);
+
+      	var query = "?data=" + encodeURIComponent(encrypted) + "&filename=" + encodeURIComponent('passphrase.crypt');
+        var uri = scope.Backup.TargetURL;
+
+		dlg = DialogService.dialog('Backing up passphrase ...', 'Backing up passphrase ...', [], null, function() {
+			AppService.post('/remoteoperation/put' + query, uri).then(function() {
+				dlg.dismiss();
+
+				continuation();
+
+			}, function(data) {
+				dlg.dismiss();				
+	        	var message = data.statusText;
+	        	if (data.data != null && data.data.Message != null)
+	        		message = data.data.Message;
+				DialogService.dialog('Error', 'Failed backup passphrase: ' + message);
+			});
+    	});
+
 	};
 });
 
